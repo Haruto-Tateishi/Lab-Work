@@ -66,8 +66,8 @@
 		- Should we apply our method to the population or subpopulation level? 
 
 8. To-Do list
-	- [ ] Make annotation of exon/intron on vcf file
-	- [ ] Add info such as flanking bases, CpG status to vcf
+	- [x] Make annotation of exon/intron on vcf file -> done
+	- [ ] Add info such as flanking bases, CpG status to vcf -> done w/ CpG status
 	- [x] Consider fileter out/annotation of CpG island, simple repeat, etc -> Make annotation of CpG. Stay away from simple repeats at this point.
 	- [x] Reconsider the choice of BED files for regulatory region -> Keep using 3 BEDfiles and make tags for differentiation
 	- [ ] Create table for SFS after all annotations

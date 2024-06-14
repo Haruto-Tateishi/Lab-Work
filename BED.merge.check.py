@@ -1,6 +1,6 @@
 # this script checks if all intervals were merged and there's no overlapping intervals in a BED file.
 
-fn1 = "Chr22.CpG.merged.tsv"
+fn1 = "Chr22.exon.RefSeq.merged.tsv"
 f1 = open(fn1, "r")
 
 intervals = f1.readlines()
