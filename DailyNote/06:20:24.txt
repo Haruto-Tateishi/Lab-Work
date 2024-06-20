@@ -1,0 +1,3 @@
+- I started working on a script that create annotations of codon/flaking bases by using pysam. If I can, I'd like to choose the way where pysam can differentiate simple repeats.
+
+- In terms of study, I tried a test of sort of upper-intermediate level of statistics. Mainly about normal distribution, t distribution, binomial, geometrical, regression, estimate/test and so on. I will extend the range of knowledge further such as gamma and poisson, while keep deepening what I have just learned. Eventually, I will study likelihood/maximum likelihood method. I think it will help me to understand the paper about Fitdadi or other inference methods of DFE.
