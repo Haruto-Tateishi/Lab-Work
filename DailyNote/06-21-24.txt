@@ -1,0 +1,5 @@
+-While I was working on the script for codon annotation, I thought it might be better to annotate the original vcf file because I have not used pysam before and the added information like SNPEff/my own annotation would be cause of error. Then, I found a minor error in the original vcf file. So, I will first finish codon annotation and will run all other annotating scripts again. Even though I can revise those scripts by using pysam, I won't do it because it would take too much time.
+
+-I've spent a couple of hours to review the statistics test and materials in it, especially chi square distribution, and regression. I would like to step further next week
+
+-I've found a paper called "Recombination, meiotic expression and human codon usage". It sounds interesting and relevant to what we've been discussing. I will read it next week
