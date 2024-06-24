@@ -1,0 +1,7 @@
+-I studied multi-nominal distribution and Poisson distribution. Sometimes I saw Poisson distribution on the research papers. It's just simply because we consider the extremely long duration and the phenomenon that barely happens, such as fixations of neutral mutation in vast population size or deleterious mutation.
+
+-In terms of script, I realized that for some reason the position numbers on vcf file do not match that on the sequence file. I will ask Vitor how he dealt with it in Drosophila dataset. 
+
+-The paper that I'm reading demonstrates what factor affects synonymous codon usage. They try to find relationship between Cc-content, recombination rate and expression patterns, It seems they found evidence saying the translational selection is not associated with SCU. I'll keep reading it. 
+
+-People dealing with payroll setup told me the way I can receive stipend through tuition payment system as tuition aid. It requires neither I-20 update nor SSN. Although depending on my mom's response, I might take this way.
