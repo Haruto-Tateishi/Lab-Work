@@ -1,0 +1,3 @@
+-I tried to lift over hg19 vcf to hg38 vcf, but I found a lot of position numbers less than 100000 which I have never seen in any vcf files or BED files for chr22. Since I'm not confident that those new SNPs doesn't affect the result in a wrong way, I will use hg19 vcf file, and thus I need to re-get all BED files that I used so far.
+
+-The paper that I read talked about recombination rate, GC-content, and codon usage. They discovered some interesting things. We can discuss this paper together. 

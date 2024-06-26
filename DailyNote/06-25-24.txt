@@ -1,0 +1,3 @@
+-The vcf file I was working on was actually assembly of hg19. But I've been using files such as BED files for annotations. I can download those files for hg19 or I can lift over the vcf file from hg19 to hg38.
+
+- I studied briefly hiper-geometric distribution, negative binomial distribution, gamma distribution, beta distribution, and linear algebra. 
