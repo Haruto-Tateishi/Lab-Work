@@ -1,0 +1,11 @@
+-I tried to lift over the vcf file from hg19 to hg38, but the lifted over vcf file didn't look good. So, I will keep using hg19 vcf file and re-download BED files and re-ran the scripts for annotations.
+
+-In terms of codon annotation, I found that the snpEff annotation and a couple of other changes due to script run do not affect pysam operations. Hence, I ran the snpEff command to annotate type of SNPs and the SNPs-counting script to filter out mutations which have more than two alternative alleles, which reduces the computational time. 
+
+-Since I wanted to create annotation for amino acid besides annotations for codon, I subtracted the starting position of each exon from the position number of vcf and divide it by three, and used modulo to identify where the SNPs are at in each codon. Therefore, the codon annotations do not necessarily have both flanking bases, which means in the case that they are at the first position or third position in their codons, they don't have both flanking bases. If the codons are not in the exon regions, they have both flanking bases.
+
+-At this point, when I tried to run with toy vcf file which has 1000 lines from the original file, the script ran correctly. But once started running with the whole vcf file, it showed a lot of base mismatch. The proportion of mismatch is quite low, but not zero. I will take a look at the issues by expanding toy.vcf file.
+
+-the script that I'm running is taking too long. There might be room for improvement. 
+
+-I made some changes on the file names. 
