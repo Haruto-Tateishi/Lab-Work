@@ -1,7 +1,7 @@
 # this script checks if the starting points of the intervals of BED files are sorted or not. If not, sort it
 
-fn1 = "Chr22.exon.RefSeq.merged11.tsv"
-fn2 = "Chr22.exon.RefSeq.sorted12.tsv"
+fn1 = "Chr22-reg-ENCODE.tsv"
+fn2 = "a.tsv"
 
 
 def start_sort(list_in, len_in):
