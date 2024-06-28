@@ -1,15 +1,15 @@
 # this script combines the lists of regulatory regions into one file. 
 
-fn1 = "Chr22.reg.list.cCREs.tsv"
+fn1 = "Chr22-reg-list-ENCODE.tsv"
 f1 = open(fn1, "r")
 
-fn2 = "Chr22.reg.list.ORegAnno.tsv"
+fn2 = "Chr22-reg-list-ORegAnno.tsv"
 f2 = open(fn2, "r")
 
-fn3 = "Chr22.reg.list.RefSeq.tsv"
+fn3 = "Chr22-reg-list-Hancer.tsv"
 f3 = open(fn3, "r")
 
-fn4 = "Chr22.reg.list.tsv"
+fn4 = "Chr22-reg-list.tsv"
 f4 = open(fn4, "w")
 
 pos_dic = {}
@@ -30,9 +30,9 @@ def pos_extraction(filename, abbreviation):
         pos_dic[reg_pos] = abbreviation
         continue
 
-pos_extraction(f1, "CR")
+pos_extraction(f1, "EN")
 pos_extraction(f2, "OR")
-pos_extraction(f3, "RS")
+pos_extraction(f3, "HA")
 
 final_dic = dict(sorted(pos_dic.items()))
 

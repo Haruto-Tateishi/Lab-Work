@@ -1,0 +1,7 @@
+-I tried to annotate codon information based on exon regions that each variant belongs to so that codon annotation will be more accurate than simply getting flanking bases and making codon with the ref base in the middle. But there's too much things to consider. For example, how to deal with positions that belong to multiple exon intervals, some exon intervals have their starting codon intervals while some don't, or  '-' strand whose compliment and orientation needs to be reversed while the ref and alt alleles on vcf file based on '+' strand no matter what.
+
+-Thus, I ended up with simply getting flanking bases and making codon with the ref allele from vcf file in the second position in the codon. This method has the obvious problem that it doesn't consider the starting point. The first base of the starting codon is not necessary to be 3n +1. Also, this problem would have big impact especially on intragenic region. Besides the effect on the codon, Annotation of amino acid do not have reliable information neither. But I stick with this method since the flanking bases information do not significantly account for this project.
+
+-Since there's no cCREs, and RefSeq BED file for hg19 dataset, I will replace them with ENCODE 3 TFBs and geneHancer. On the other hand, there was ORegAnno BED file for hg19 as well as hg38.
+
+-Because CpG island and NCBI RefSeq BED files for hg19, I will keep using them and re-run the codes to annotate all information. I will be ready for making table and finally SFS.

@@ -1,8 +1,8 @@
 # this script sorts and merges the overlapping intervals into the one
 
-fn1 = "Chr22.CpG.tsv"
+fn1 = "Chr22-reg-ORegAnno.tsv"
 
-fn2 = "Chr22.CpG.merged.tsv"
+fn2 = "Chr22-reg-ORegAnno-merged.tsv"
 
 def BED_merging(input_fn, output_fn):
   input = open(input_fn, "r")
@@ -62,6 +62,7 @@ def BED_merge_check(input_fn):
   while True:
     if i >= num_line - 1:
       input.close()
+      return overlap_list
       break
     if i >= num_line:
       input.close()
@@ -88,11 +89,11 @@ def BED_merge_check(input_fn):
 
 while True:
   BED_merging(fn1, fn2)
-  overlap_list = []
-  BED_merge_check(fn2)
+  overlap_list = BED_merge_check(fn2)
   if len(overlap_list) == 0:
     print("completed")
     break
   if len(overlap_list) != 0:
     print("on progress")
+    fn1 = fn2
     continue
