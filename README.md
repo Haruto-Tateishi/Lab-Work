@@ -4,21 +4,22 @@
 	- Infer human (non)synonymous DFE(s) using the PRFratio method. For this, we need to define a set of SNPs potentially neutral. In Drosophila melanogaster, we saw that SNPs from short-introns (< 86 bp) were a good candidate. For Humans, we are going to start testing SNP from non-regulatory, intergenic regions and use the folded SFS derived from these SNPs as the denominator for the ratio between two SFSs, where the numerator would be either a synonymous or a nonsynonymous SFS. The goal is to obtain a better version of DFEs that accounts for demography (a characteristic of the PRFratio method) and that uses a more appropriate set of neutral SNPs. It opens for the possibility of measuring selection on different genomic features like: regulatory regions, transcription factor binding sites, UTRs etc, and for measuring selection on synonymous codon pairs (one of the goals of the multiclass synonymous sites project). 
 
 2. BED files I used
-	- ENCODE cCREs(reg)
+	- geneHancer(reg)
 	- ORegAnno(reg)
-	- RefSeq Func Elems(reg)
+	- ENCODE(reg)
 	- NCBI RefSeq(exon/intron)
 	- CpG island(CpG)
+	- FASTA file for hg19
 
 3. Human Genome ID
-	- GRCh38/hg38
+	- GRCh37.75/hg19
 
 4. Annotation tools for SNPs (synonymous, nonsynonymous, intergenic, etc)
 	- SNPEff
 
 5. Dataset I used
-	- vcf file from 1000 genome project, phase 3
-	- 3 BED files from UCSC genome browser
+	- vcf file from 1000 genome project, phase 3, hg19
+	- 5 BED files and other files from UCSC genome browser
 
 6. Sample information of vcf
 	- super population
@@ -68,11 +69,8 @@
 		- Should we apply our method to the population or subpopulation level? 
 
 8. To-Do list
-	- [x] Make annotation of exon/intron on vcf file -> done
-	- [ ] Add info such as flanking bases, CpG status to vcf -> done w/ CpG status
-	- [x] Consider fileter out/annotation of CpG island, simple repeat, etc -> Make annotation of CpG. Stay away from simple repeats at this point.
-	- [x] Reconsider the choice of BED files for regulatory region -> Keep using 3 BEDfiles and make tags for differentiation
-	- [ ] Create table for SFS after all annotations
+	- [x] Create table for SFS after all annotations
+	- [ ] Create several SFS by changing the filter options
 	- [ ] Check the sample size of each population
 	- [ ] Develop github repository
 	- [ ] (Constant) Read articles

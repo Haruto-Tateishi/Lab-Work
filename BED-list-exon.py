@@ -1,13 +1,13 @@
 # this script makes a list of exon SNPs based on BED file
 # through running this script all of the numbers of positions will be 1-base
 
-fn1 = "1kG.chr22.SNPEff.prcsd.reg.CpG.vcf"
+fn1 = "1kG-chr22-hg19-snpEff-prcsd-codon-reg.vcf"
 f1 = open(fn1, 'r')
 
-fn2 = "Chr22.exon.list.tsv"
+fn2 = "Chr22-exon-list.tsv"
 f2 = open(fn2, 'w')
 
-fn3 = "Chr22.exon.RefSeq.merged.tsv"
+fn3 = "Chr22-exon-RefSeq-merged.tsv"
 f3 = open(fn3, "r")
 
 BED_lines = f3.readlines()
@@ -22,7 +22,7 @@ while True:
     if vcf_data[0] == "22":
         vcf_pos = int(vcf_data[1])
         print(vcf_pos)
-        if vcf_pos >= 50900000:
+        if vcf_pos >= 51244237:
             break
         else:
             while True:

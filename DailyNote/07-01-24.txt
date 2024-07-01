@@ -1,0 +1,3 @@
+-I finished making table from vcf file. So I can start working on SFS.
+
+-I need to update repository and keep it nice for Jody's review.

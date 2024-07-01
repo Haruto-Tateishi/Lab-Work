@@ -1,63 +1,57 @@
 # this script annotates file with regulatory region.
 
-fn1 = "1kG.chr22.SNPEff.prcsd.vcf"
-f1 = open(fn1, "r")
+import pysam
 
-fn2 = "Chr22.reg.list.tsv"
+fn1 = "1kG-chr22-hg19-snpEff-prcsd-codon.vcf"
+f1 = pysam.VariantFile(fn1)
+
+fn2 = "Chr22-reg-list.tsv"
 f2 = open(fn2, "r")
 
-fn3 = "1kG.chr22.SNPEff.prcsd.reg.vcf"
-f3 = open(fn3, "w")
+if 'Reg' not in f1.header.info:
+        f1.header.info.add('Reg', 1, 'String', 'True/False for Regulatory Region')
+if 'Src' not in f1.header.info:
+        f1.header.info.add('Src', 1, 'String', 'Sources of Regulatory Region')
+
+fn3 = "1kG-chr22-hg19-snpEff-prcsd-codon-reg.vcf"
+f3 = pysam.VariantFile(fn3, 'w', header=f1.header)
 
 reg_lines = f2.readlines()
 i = 0
 
-while True:
+for record in f1:
 # for g in range(1000):
-  vcf_line = f1.readline()
-  if len(vcf_line) ==0:
-    break
-  if vcf_line[0] == "#":
-    f3.write(vcf_line)
-    continue
-  else:
-    vcf_row = vcf_line.split(sep="\t")
-    vcf_pos = int(vcf_row[1])
-    print(vcf_pos)
-    while True:
-      try:
-        reg_row = reg_lines[i].split(sep="\t")
-        # print(reg_row)
-        if reg_row[0] == "22":
-          reg_pos = int(reg_row[1])
-          if reg_pos < vcf_pos:
-            i += 1
-            continue
-          if reg_pos > vcf_pos:
-            # no regulatory-region SNPs
-            F_reg_info = vcf_row[7].split(sep="|")
-            F_reg_info.insert(5, "REG=F")
-            F_reg_info.insert(6, "N/A")
-            vcf_row[7] = "|".join(F_reg_info)
-            vcf_F_reg = "\t".join(vcf_row)
-            f3.write(vcf_F_reg)
-            break
-          if reg_pos == vcf_pos:
-            # regulatory-region SNPs
-            T_reg_info = vcf_row[7].split(sep="|")
-            T_reg_info.insert(5, "REG=T")
-            T_reg_info.insert(6, reg_row[2])
-            vcf_row[7] = "|".join(T_reg_info)
-            vcf_T_reg = "\t".join(vcf_row)
-            f3.write(vcf_T_reg)
-            i += 1
-            break
-      except IndexError:
-        # rest of no regulatory-region SNPs
-        F_reg_info = vcf_row[7].split(sep="|")
-        F_reg_info.insert(5, "REG=F")
-        F_reg_info.insert(6, "N/A")
-        vcf_row[7] = "|".join(F_reg_info)
-        vcf_F_reg = "\t".join(vcf_row)
-        f3.write(vcf_F_reg)
-        break
+  vcf_pos = record.pos
+  print(vcf_pos)
+  while True:
+    try:
+      reg_row = reg_lines[i].split(sep="\t")
+      # print(reg_row)
+      if reg_row[0] == "22":
+        reg_pos = int(reg_row[1])
+        if reg_pos < vcf_pos:
+          i += 1
+          continue
+        if reg_pos > vcf_pos:
+          # no regulatory-region SNPs
+          record.info['Reg'] = "F"
+          record.info['Src'] = 'N/A'
+          f3.write(record)
+          break
+        if reg_pos == vcf_pos:
+          # regulatory-region SNPs
+          record.info['Reg'] = 'T'
+          record.info['Src'] = reg_row[2]
+          i += 1
+          f3.write(record)
+          break
+    except IndexError:
+      # rest of no regulatory-region SNPs
+      record.info['Reg'] = 'F'
+      record.info['Src'] = 'N/A'
+      f3.write(record)
+      break
+
+f1.close()
+f2.close()  
+f3.close()

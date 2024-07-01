@@ -1,8 +1,8 @@
 # this script sorts and merges the overlapping intervals into the one
 # this script relies on the intervals order. startpoints have to be sorted in increasing order.
 
-fn1 = "Chr22.exon.RefSeq.sorted12.tsv"
-fn2 = "Chr22.exon.RefSeq.merged12.tsv"
+fn1 = "Chr22-exon-RefSeq-sorted.tsv"
+fn2 = "Chr22-exon-RefSeq-merged.tsv"
 
 def BED_merging(input_fn, output_fn):
   input = open(input_fn, "r")

@@ -29,10 +29,13 @@ f2_in.close
 # print(pop_list)
 
 while True:
+# for g in range(500):
     line = f1_in.readline().decode()
     if len(line) <= 1:
       break
-    if line[0:6] == "#CHROM":
+    if line[1] == "#":
+        f3_in.write(line)
+    if line[1] == "C":
        sample_id_list = line.strip().split(sep="\t")[9:]
        top_list = []
        for i1 in range(9):

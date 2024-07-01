@@ -1,13 +1,13 @@
 # this script makes a list of CpG island SNPs based on BED file
 # through running this script all of the numbers of positions will be 1-base
 
-fn1 = "1kG.chr22.SNPEff.prcsd.reg.vcf"
+fn1 = "1kG-chr22-hg19-snpEff-prcsd-codon-reg-exon.vcf"
 f1 = open(fn1, 'r')
 
-fn2 = "Chr22.CpG.list.tsv"
+fn2 = "Chr22-CpG-list.tsv"
 f2 = open(fn2, 'w')
 
-fn3 = "Chr22.CpG.merged.tsv"
+fn3 = "Chr22-CpG-merged.tsv"
 f3 = open(fn3, "r")
 
 BED_lines = f3.readlines()
@@ -18,11 +18,11 @@ while True:
 # for g in range(1000):
     vcf_data = f1.readline().split(sep="\t")
     if len(vcf_data) == 0:
-        break 
+        break
     if vcf_data[0] == "22":
         vcf_pos = int(vcf_data[1])
         print(vcf_pos)
-        if vcf_pos >= 50800000:
+        if vcf_pos >= 51244237:
             break
         else:
             while True:
