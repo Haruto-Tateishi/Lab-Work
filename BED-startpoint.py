@@ -1,6 +1,6 @@
 # this script checks if the starting points of the intervals of BED files are sorted or not. If not, sort it
 
-fn1 = "Chr22-reg-ENCODE.tsv"
+fn1 = "Chr22-CpG-merged.tsv"
 fn2 = "a.tsv"
 
 

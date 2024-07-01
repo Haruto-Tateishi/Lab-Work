@@ -1,13 +1,12 @@
 # this script extracts the number of SNPs of two allele variation from vcf file.
 
-
-fn1 = "1kG.chr22.original.vcf"
+fn1 = "1kG.chr22.hg19.snpEff.vcf"
 f1_in = open(fn1, 'r')
 
 fn2 = "1kG.phase3.samples.tsv"
 f2_in = open(fn2, 'r')
 
-fn3 = "1kG.chr22.prcsd.vcf"
+fn3 = "1kG-chr22-hg19-snpEff-prcsd.vcf"
 f3_in = open(fn3, 'w')
 
 

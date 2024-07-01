@@ -2,13 +2,13 @@
 # through running this script all of the numbers of positions will be 1-base
 
 
-fn1 = "1kG.chr22.SNPEff.prcsd.vcf"
+fn1 = "1kG-chr22-hg19-snpEff-prcsd-codon.vcf"
 f1 = open(fn1, 'r')
 
-fn2 = "Chr22.reg.list.RefSeq.txt"
+fn2 = "Chr22-reg-list-Hancer.tsv"
 f2 = open(fn2, 'w')
 
-fn3 = "Chr22.reg.RefSeq.merged.txt"
+fn3 = "Chr22-reg-Hancer-merged.tsv"
 f3 = open(fn3, "r")
 
 BED_lines = f3.readlines()
@@ -23,7 +23,8 @@ while True:
     if vcf_data[0] == "22":
         vcf_pos = int(vcf_data[1])
         print(vcf_pos)
-        if vcf_pos >= 50800000:
+        if vcf_pos == 51244237:
+            f2.close()
             break
         else:
             while True:
