@@ -1,0 +1,7 @@
+-We met and talked about the way to share the drive, but we have to wait for the contact from service.
+
+-Jody examined my scripts and assigned me to figure out why there are multiple annotations for 1kG vcf file while the gnomad has only one annotation for each row. 
+
+-First I found that it is possible to use command, --pick, and annotate only one consequence which seems to have the most significant information. So, there's possibility that they used this command.
+
+-Or they might have done some post-processing after running VEP command. I saw a couple of websites and videos where they explain what gnomad is like and how it can be used. They didn't explain anything about VEP but they did processing like filtering at some point. So, there's possibility that they have done post-processing after running VEP command.

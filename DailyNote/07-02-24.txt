@@ -1,0 +1,3 @@
+-I updated some files and toy vcf files on the virtual repository and made it in shape. 
+
+-I tried to download and install vep but it ended up with a lot of errors.At this moment, I can't run the command of vep. 
