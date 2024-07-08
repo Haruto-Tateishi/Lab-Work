@@ -6,8 +6,6 @@ import pysam
 fn1 = "1kG-chr22-hg19-vep.vcf"
 # f1 = pysam.VariantFile(fn1)
 
-fn2 = "VEP-types.txt"
-f2 = open(fn2, "r")
 
 # plot scatter graph for whole chromsome
 # whole_list = []
@@ -39,18 +37,9 @@ f2 = open(fn2, "r")
 
 f3 = pysam.VariantFile(fn1)
 
-conseq_list = f2.readlines()
-conseq_len = len(conseq_list)
 bin_dict = {}
+bin_keys = bin_dict.keys()
 i = 1
-while True:
-    conseq_type = conseq_list[i].replace("\n", "").split(sep="\t")[0]
-    bin_dict[conseq_type] = []
-    i +=1
-    if i == conseq_len:
-        break
-    else:
-        continue
 
 # import time
 
@@ -67,9 +56,13 @@ for record in f3:
         # print(ac)
         # time.sleep(1/20)
         for annotation in vep:
-            if "splice_donor_variant" in annotation:
-                print(annotation, ac)
-            bin_dict[annotation].append(ac)
+            if annotation not in bin_keys:
+                bin_dict[annotation] = [ac]
+                bin_keys = bin_dict.keys()
+                continue
+            if annotation in bin_keys:
+                bin_dict[annotation].append(ac)
+                continue
     except KeyError:
         # print(annotation)
         continue
@@ -120,4 +113,3 @@ for conseq_b in bin_dict.keys():
 
 
 f3.close()
-f2.close()

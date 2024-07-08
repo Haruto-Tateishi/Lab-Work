@@ -1,0 +1,3 @@
+-I wrote a script that runs through gzipped binary vcf files and creates super dictionary where the first keys are the consequences and the second keys are the string of AC and AN and the values are the counts of the specific combination of AC and AN.
+
+-I made two toy binary gzipped vcf file for both gnomad and 1kG. And saved each super dictionary into pickle files.
