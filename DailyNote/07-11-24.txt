@@ -1,0 +1,5 @@
+-I ran the downsample script and made two text files, one with nc = 10000 and another with nc = 1000000. I will try to develop my script for plotting relative cumulative SFSs.
+
+-I somehow understood how the script that Jody shared generates the expected SFS or just simulated SFS. I will try run it with different values of g.
+
+-I found that there's no specific order of annotations when one mutation has multiple annotations. 

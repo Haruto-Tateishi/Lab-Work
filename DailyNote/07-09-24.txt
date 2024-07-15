@@ -1,0 +1,3 @@
+-I tried to set up VEP on the file server, but I couldn't. I wasn't given a permission to use sudo, and I faced a couple of other problems that I guess I had when I was setting it up on my laptop. 
+
+-I received the email from an engineer saying that I should be able to access now. But I couldn't get the context, so I will wait for his another reply.

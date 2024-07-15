@@ -1,0 +1,5 @@
+-I ran the script of SFS simulation and I generated a lot of SFS, but some of them look weird. I set the population size like 1000, 10000, and 100000 because if I set it like 100, the mutation barely happened. 
+
+-Even though I set the population size in the reasonable range, the mutation barely happened when the value of g is quite high, 100, or quite low, -100. Some of them contain only one mutation which happened in the mid x axis. This result made the graph look weird.
+
+-Speaking of VEP annotating 1kG vcf files, I found gzipping the annotated vcf file produces the error like broken pipe. So right now I'm running the VEP command without directing it to gzip command. I will see the result tomorrow.
