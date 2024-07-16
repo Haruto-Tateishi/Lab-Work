@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-a, b = prf.simsfs(0.1, 1, 100000, None, 90000, False)
+a, b = prf.simsfs(20, 100, 1000, None, 900, True)
 print(a, b)
 
 np_array_a = np.array(a)
@@ -21,19 +21,9 @@ relative_b = sum_b / sum_b[-1]
 x_axis_a = np.arange(1, len(relative_a) + 1)
 x_axis_b = np.arange(1, len(relative_b) + 1)
 
-def logarithmic_fit(x, a, b):
-    return a * np.log(x) + b
-
-params_a, params_covariance_a = curve_fit(logarithmic_fit, x_axis_a, relative_a)
-curve_a = logarithmic_fit(x_axis_a, *params_a)
-
-params_b, params_covariance_b = curve_fit(logarithmic_fit, x_axis_b, relative_b)
-curve_b = logarithmic_fit(x_axis_b, *params_b)
-
 
 plt.figure(figsize=(10, 6))
 plt.plot(x_axis_a, relative_a, marker='', linestyle='-', color='b', label='Data')
-plt.plot(x_axis_a, curve_a, linestyle='-', color='r', label='Curve Fit')
 plt.xlabel('Data')
 plt.ylabel('Relative Cumulative Sum')
 plt.title('Relative Cumulative Chart')
@@ -43,7 +33,6 @@ plt.show()
 
 plt.figure(figsize=(10, 6))
 plt.plot(x_axis_b, relative_b, marker='', linestyle='-', color='b', label='Data')
-plt.plot(x_axis_b, curve_b, linestyle='-', color='r', label='Curve Fit')
 plt.xlabel('Data')
 plt.ylabel('Relative Cumulative Sum')
 plt.title('Relative Cumulative Folded Chart')

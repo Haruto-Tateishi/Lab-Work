@@ -1,0 +1,5 @@
+-I realized my misunderstanding on mutation rate and theta. Theta = 4Nu which is population mutation rate while u is generation mutation rate. 
+
+-I re-ran the script to generate SFSs with multiple sets of parameter values. They all look great. So I stepped forward to integrate the area under the SFS curves, which is expected to show the relationship between negative selection, positive selection, and neutral selection. I can see the clear correlation among those SFSs and areas. 
+
+-I used trapezoid method to integrate the area under the curve. Since I have the list of value instead of equations, this method fits to our situation. 
