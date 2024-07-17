@@ -3,7 +3,7 @@ import numpy as np
 import scipy.integrate as integrate
 import scipy.special as special
 
-def average_integration(theta, g, nc, misspec, maxi, returnexpected, output_file):
+def sim_integration(theta, g, nc, misspec, maxi, returnexpected, output_file):
     a_list = []
     b_list = []
     for i in range(10):
@@ -37,9 +37,37 @@ def average_integration(theta, g, nc, misspec, maxi, returnexpected, output_file
     line = "\t".join(line)
     output_file.write(line)
 
-fn1 = "SFS-sim-integrate.tsv"
+def data_integration(conseq, data_line, output_file):
+    data_list = data_line.strip().split(sep="\t")
+    np_array = np.array(data_list)
+    sum = np.cumsum(np_array)
+    relative = sum / sum[-1]
+    result = integrate.cumulative_trapezoid(relative, x=None, dx=1.0, axis=-1, initial=None)
+    integrate = result[-1]
+
+    line = [conseq, str(integrate), "\n"]
+    line = "\t".join(line)
+    output_file.write(line)
+
+fn1 = "SFS-downsample-integrate.tsv"
 f1 = open(fn1, "a")
 
-average_integration(2000, 100, 100000, None, 90000, True, f1)
+fn2 = "gnomad-vep-downsample-1000000.txt"
+f2 = open(fn2, "r")
+
+lines = f2.readlines()
+input_len = len(lines)
+i = 2
+while True:
+    if i == input_len:
+        break 
+    else:
+        conseq = lines[i].strip()
+        i +=1
+        data_line = lines[i]
+        i +=1
+        data_integration(conseq, data_line, f1)
+        pass
 
 f1.close()
+f2.close()
