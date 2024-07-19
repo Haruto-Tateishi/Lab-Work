@@ -1,5 +1,0 @@
--I finally got an access to the file server. So, I can work on the nomad vcf files. 
-
--I logged in the desktop computer in my room and it has the directories that I have being working on through ssh command. So I will set up the desktop in order to work on the desktop.
-
--I'm running the script of downsampling with nc value = 1 million. And I'm running VEP annotation for all vcf files from 1kG. 

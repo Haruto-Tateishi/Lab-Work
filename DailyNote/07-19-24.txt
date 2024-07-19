@@ -1,0 +1,3 @@
+-I'm running the downsampling script for nc value = 1000000 and 5008. Also, I tried to run the pickling script for all 1kG vcf files, but it seems like there's different format other than gt (genotype) I'm trying to debug that. Probably another type of format indicates that the way of counts is irregular so that I can extract info from the row and ended up with an error. 
+
+-I updated the script of integration and SFS generation. Now I don't have pickle file for 1kG yet. I hope they will be all done in this weekend.
