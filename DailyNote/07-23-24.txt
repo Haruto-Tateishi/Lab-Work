@@ -1,0 +1,5 @@
+-the format error occurred in vcf files of chromosome 1 - 12 and 16. They all have some lines where they lack returning so that pysam can't read them. 
+
+-I'm running script that makes sure if the asme thing is happening on the original vcf files. If there's no problem with the original vcf files, the vep messed up. But there's still question that some of vcf files are annotated properly while some are not.
+
+-Because the computer shut down due to overwhelming amount of work, I am reranning downsampling script.
