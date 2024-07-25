@@ -1,0 +1,1 @@
+-today I'm done with filtering out chromosome 1-5. I will run the script of filtering and vep annotation tonight and see the result tomorrow. 
