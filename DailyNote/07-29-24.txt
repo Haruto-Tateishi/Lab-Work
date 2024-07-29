@@ -1,0 +1,5 @@
+-The downsampling script for nomad with nc = 1000000 is still running. 
+
+-I finished annotating all 1kG vcf files with vep. I made a SFS from the all 1kG vcf files even though it looks not great for some consequences. 
+
+-I finished filtering out the variants that do not have the same ref base as the base on fasta file. Right now, I'm running codon annotating script which adds annotation only on synonymous variants. 
