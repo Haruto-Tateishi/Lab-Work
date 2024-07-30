@@ -1,0 +1,5 @@
+-Still running downsampling script for gnoamd with nc = 1000000
+
+-I found an error on the script of codon annotating script like it doesn't upper() all of the synonymous codon pair so that the pickle file wasn't made properly. Right now, I'm re-running the script.
+
+-Also, I kinda struggle with coloring all curves with different colors. Simply because there are 134 codon pairs, it's hard to differentiate them by colors. But I want to avoid use the same color for multiple codon pairs. 
