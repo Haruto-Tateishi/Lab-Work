@@ -1,6 +1,8 @@
 # this scripts provides relative cumulative SFSs
 
 import numpy as np
+# from matplotlib import colormaps
+from matplotlib.cm import get_cmap
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import random
@@ -13,6 +15,7 @@ def curve_color(colors):
     # print(colors)
     return color
 
+
 def rel_cum(conseq, data_line, curve_color):
     data = data_line.strip().split()
     float_list = [float(x) for x in data]
@@ -22,13 +25,16 @@ def rel_cum(conseq, data_line, curve_color):
     # print(cumulative_sum)
     relative_cumulative = cumulative_sum / cumulative_sum[-1]
     x_axis = np.arange(1, len(relative_cumulative) + 1)
-    plt.plot(x_axis, relative_cumulative, marker='', linestyle='-', color=f'{curve_color}', label=f'{conseq}')
+    plt.plot(x_axis, relative_cumulative, marker='', linestyle='-', color=curve_color, label=f'{conseq}')
 
-def pkl_rel_cum(pickle_file, nc):
+def pkl_rel_cum(pickle_file, nc, colormap):
     Dic = pickle.load(open(pickle_file, "rb"))
+    i = 0
     for conseq in Dic:
         sfs = np.zeros(nc, dtype=np.float32)
-        c_color = curve_color(colors)
+        c_color = colormap(i)
+        # print(c_color)
+        i +=1
         for acan in Dic[conseq]:
             # an = acan.split(sep="_")[3]
             ac = int(acan.split(sep="_")[1])
@@ -38,14 +44,18 @@ def pkl_rel_cum(pickle_file, nc):
         try:
             relative = sum / sum[-1]
             x_axis = np.arange(1, len(relative) + 1)
-            plt.plot(x_axis, relative, marker='', linestyle='-', color=f'{c_color}', label=f'{conseq}')
+            plt.plot(x_axis, relative, marker='', linestyle='-', color=c_color, label=f'{conseq}')
         except RuntimeWarning:
             pass
 
 
-fn1 = "gnomad-vep-downsample-10000.txt"
+fn1 = "gnomad-vep-downsample-1000000.txt"
 f1 = open(fn1, 'r')
+# fn1 = "1kG_vep_syn_all_codon_counts.p"
 nc = 1000000
+
+num_curves = 134
+colormap = get_cmap('hsv', num_curves)
 
 plt.figure(figsize=(10, 6))
 plt.xlabel('Data')
@@ -71,8 +81,8 @@ while True:
         rel_cum(conseq, data_line, color)
         pass
 
+# pkl_rel_cum(fn1, 5008, colormap)
 
-
-plt.ylim(0.985, 1.0001)
-plt.legend(loc='lower right', fontsize='small', ncol=2, frameon=True)
+plt.ylim(0.995, 1.0001)
+plt.legend(loc='lower right', fontsize='small', ncol=3, frameon=True)
 plt.show()

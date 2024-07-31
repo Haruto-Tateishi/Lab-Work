@@ -1,0 +1,3 @@
+-Finally done with downsampling gnomad with nc = 10000000. I uploaded the charts and table of area under the curves.
+
+-I made two pickle files just in case. One has all the data from all line. Another one has data only from lines having one annotation which must be synonymous variant. The SFS from the first pickle file does not look nice while the second sorta does. I also uploaded the SFSs and tables of area under the curves. I might improve the tables in order to get increasing/decreasing order for the area. There are some synonymous codon pairs where no data was found. 

@@ -78,15 +78,14 @@ def dict_integration(pickle_file, nc, output_file):
             line = [conseq, "No Curve", "\n"]
             line = "\t".join(line)
             output_file.write(line)
-    Dic.close()
 
 
 
-fn1 = "SFS-downsample-integrate-all-5008.tsv"
+fn1 = "gnomad-SFS-downsample-integrate-single-1000000.tsv"
 f1 = open(fn1, "w")
 f1.write("conseq\tarea-under-curve\n")
 
-fn2 = "gnomad-vep-downsample-5008.txt"
+fn2 = "gnomad-vep-downsample-1000000.txt"
 f2 = open(fn2, "r")
 
 lines = f2.readlines()
@@ -97,9 +96,9 @@ while True:
         break 
     else:
         conseq = lines[i].strip()
-        # if "&" in conseq:
-        #     i +=2
-        #     continue
+        if "&" in conseq:
+            i +=2
+            continue
         i +=1
         data_line = lines[i]
         i +=1
@@ -110,11 +109,11 @@ f1.close()
 f2.close()
 
 
-# fn1 = "1kG-SFS-downsample-integrate.tsv"
+# fn1 = "1kG-SFS-syn-single-integrate.tsv"
 # f1 = open(fn1, "w")
 # f1.write("conseq\tarea-under-curve\n")
 
-# fn2 = "1kG_vep_consequence_ANAC_counts.p"
+# fn2 = "1kG_vep_syn_single_codon_counts.p"
 
 # dict_integration(fn2, 5008, f1)
 
