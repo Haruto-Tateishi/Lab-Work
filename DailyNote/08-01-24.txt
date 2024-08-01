@@ -1,0 +1,5 @@
+-I finished downsampling for 1kG vcf file which is filtered by pantry6 and synonymous variant with each nc value, 30, 50, 100, 200, 500.
+
+-I also changed script in order to get area table with the decreasing order. I ran it for the downsampled 1kG. I'm going to update other tables as well.
+
+-I made all SFS for the downsampled 1kG. They all look messy though. 

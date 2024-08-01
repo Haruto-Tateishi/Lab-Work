@@ -49,13 +49,13 @@ def pkl_rel_cum(pickle_file, nc, colormap):
             pass
 
 
-fn1 = "gnomad-vep-downsample-1000000.txt"
-f1 = open(fn1, 'r')
-# fn1 = "1kG_vep_syn_all_codon_counts.p"
-nc = 1000000
+# fn1 = "1kG-vep-syn-single-codon-downsample-500.txt"
+# f1 = open(fn1, 'r')
+fn1 = "1kG_vep_syn_all_codon_counts.p"
+nc = 5008
 
 num_curves = 134
-colormap = get_cmap('hsv', num_curves)
+colormap = get_cmap('gist_ncar', num_curves)
 
 plt.figure(figsize=(10, 6))
 plt.xlabel('Data')
@@ -63,26 +63,29 @@ plt.ylabel('Relative Cumulative Sum')
 plt.title(f'Relative Cumulative Chart with nc value = {str(nc)}')
 plt.grid(True)
 
-lines = f1.readlines()
-input_len = len(lines)
-i = 2
-while True:
-    if i == input_len:
-        break 
-    else:
-        conseq = lines[i].strip()
-        # if "&" in conseq:
-        #     i +=2
-        #     continue
-        i +=1
-        data_line = lines[i]
-        i +=1
-        color = curve_color(colors)
-        rel_cum(conseq, data_line, color)
-        pass
+# lines = f1.readlines()
+# input_len = len(lines)
+# i = 2
+# g = 0
+# while True:
+#     if i == input_len:
+#         break 
+#     else:
+#         conseq = lines[i].strip()
+#         # if "&" in conseq:
+#         #     i +=2
+#         #     continue
+#         i +=1
+#         data_line = lines[i]
+#         i +=1
+#         # color = curve_color(colors)
+#         color = colormap(g)
+#         g += 1
+#         rel_cum(conseq, data_line, color)
+#         pass
 
-# pkl_rel_cum(fn1, 5008, colormap)
+pkl_rel_cum(fn1, 5008, colormap)
 
-plt.ylim(0.995, 1.0001)
-plt.legend(loc='lower right', fontsize='small', ncol=3, frameon=True)
+plt.ylim(0.9, 1.0001)
+plt.legend(loc='lower right', fontsize='small', ncol=8, frameon=True)
 plt.show()
