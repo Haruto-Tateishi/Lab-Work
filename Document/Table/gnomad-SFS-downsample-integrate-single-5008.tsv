@@ -1,0 +1,26 @@
+conseq	area-under-curve
+non_coding_transcript_variant	5006.0	
+stop_retained_variant	5004.517211201867	
+protein_altering_variant	5004.062424242424	
+mature_miRNA_variant	5003.061728395061	
+start_lost	5002.228352445588	
+splice_donor_variant	4999.743796973133	
+splice_acceptor_variant	4996.679722790843	
+stop_gained	4992.383747662146	
+stop_lost	4983.650197628373	
+frameshift_variant	4981.107395331894	
+regulatory_region_variant	4976.912470824	
+inframe_deletion	4955.156985405341	
+inframe_insertion	4944.089263972985	
+missense_variant	4930.120167721918	
+5_prime_UTR_variant	4903.734552816159	
+upstream_gene_variant	4882.25197028062	
+3_prime_UTR_variant	4880.563501075528	
+downstream_gene_variant	4880.24192882511	
+intron_variant	4870.911048702246	
+synonymous_variant	4868.827911233293	
+intergenic_variant	4867.476723485469	
+non_coding_transcript_exon_variant	4860.541474217721	
+coding_sequence_variant	4575.888297872534	
+transcript_ablation	No Curve	
+TF_binding_site_variant	No Curve	
