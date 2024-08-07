@@ -46,6 +46,8 @@
  		- Make visual graph of relative cumulative SFS from pickle file or SFS text file. 
  	- SFS-sim.py
  		- Make visual graph of relative cumulative SFS from simulated SFS.
+ 	- table-combine.py
+ 		- Create another table by combining the tables of area under curve for further comparison.
  	- vcf-SFS-conseq-type.py
  		- Make various type of SFS such as bar charts and scatter charts
  	- vcf-ann-codon.py
@@ -54,6 +56,10 @@
  		- Used for creating super-dictionary pickle file based with consequences as the first keys.
  	- vcf-downsample-pickle.py
  		- From super-dictionary pickle file, create SFS text files by downsampling the data to specific nc value.
+ 	- vcf-filter-chimp.py
+ 		- Filter out lines whose ref bases do no match to ones of pantro6 ancestral genome sequence.
+ 	- vcf-filter-syn.py
+ 		- Filter out lines which do not have "synonymous_variant" vep annotation.
  	- vcf-snpEff-VEP-types.py
  		- Extract all types of consequences annotated by either VEP or snpEff and output as text file.
  
@@ -69,10 +75,24 @@
  		- Contain additional files such as synonymous_codon_pairs.txt
  		
  7. Pipeline
- 	1. Annotate vcf files with VEP(variant effective predictor) like the command below
- 		- ./vep -i path/to/input_vcf --cache --assembly GRCh37 --vcf --everything -o path/to/output_vcf
- 	2. 
- 	
+ 	- Getting SFS for consequences
+ 		1. Annotate vcf files with VEP(variant effective predictor) like the command below
+ 			- ./vep -i path/to/input_vcf --cache --assembly GRCh37 --vcf --everything -o path/to/output_vcf
+ 		2. Run the script, 1kG-pickle.py or vcf-dict-pickle.py, to get super-dictionary pickle file.
+ 		3. Run the script, SFS-rel-cum.py, to get visual relative cumulative SFS.
+ 		4. Run the script, SFS-integration.py, to get table of area under curve for the comparison of degrees of selection.
+ 	- Getting SFS for synonymous codon pairs
+ 		1. Annotate vcf files with VEP(variant effective predictor) like the command below
+ 			- ./vep -i path/to/input_vcf --cache --assembly GRCh37 --vcf --everything -o path/to/output_vcf
+ 		2. Run the script, vcf-filter-chimp.py, to filter out lines whose ref bases do no match to ones of pantro6 ancestral genome sequence
+ 		3. Run the script, vcf-filter-syn.py, to filter out lines which do not have "synonymous_variant" vep annotation
+ 		4. Run the script, 1kG-pickle, to get super-dictionary pickle file.
+ 		5. Run the script, vcf-downsample-pickle.py, with optional nc values to downsample the pickle file.
+ 		6. Run the script, SFS-rel-cum, to get visual relative cumulative SFS for each SFS text files and the original pickle file.
+ 		7. Run the script, SFS-integration.py, to get tables of area under curve for the comparison of degrees of selection.
+ 		8. Run the script, table-combine.py, to create another table by combining the tables of area under curve for further comparison.
+ 			
+ 			
 ## Project with Vitor		
 1. Overview of the Project with Vitor
 	- Infer human (non)synonymous DFE(s) using the PRFratio method. For this, we need to define a set of SNPs potentially neutral. In Drosophila melanogaster, we saw that SNPs from short-introns (< 86 bp) were a good candidate. For Humans, we are going to start testing SNP from non-regulatory, intergenic regions and use the folded SFS derived from these SNPs as the denominator for the ratio between two SFSs, where the numerator would be either a synonymous or a nonsynonymous SFS. The goal is to obtain a better version of DFEs that accounts for demography (a characteristic of the PRFratio method) and that uses a more appropriate set of neutral SNPs. It opens for the possibility of measuring selection on different genomic features like: regulatory regions, transcription factor binding sites, UTRs etc, and for measuring selection on synonymous codon pairs (one of the goals of the multiclass synonymous sites project). 
