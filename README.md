@@ -29,16 +29,50 @@
 		- Made an SFS for all the data, comparing each consequence annotated by vep.
 		- Filtered the SNPs whose reference bases are not same as the ancestral bases(chimpanzee:pantro6).
 		- Filtered the SNPs which do not have 'synonymous_variant' annotation.
-		- Made two pickle files, one is using all filtered data, another is using only lines having one annotation, which is 'synonymous_variant'
+		- Made two pickle files, "all" is using all filtered data, "single" is using only lines having one annotation, which is 'synonymous_variant'
 		- Made SFSs from the pickle files and from downsampled data with nc = 30, 50, 100, 200, 500.
 		- All SFS graphs(Cum_1kG_~) is available in the file, Charts, on the github archive.
 		- All SFS text files(1kG-vep-syn-all/single-codon-downsmaple-~) is available on the archive.
 		- All tables of integration(1kG-SFS-downsample-integrate-syn~) is available on the archive. The tables of area under curves are decreasing order, as scrolling down. 
 
 5. Scripts
-	- 
+	- 1kG-pickle.py
+		- Create super dictionary, where the first keys are codon pairs(changeable), and the second keys are counts of AN and AC and the values are the counts of appearance, and save it as pickle file.
+	- SFS-integration.py
+		- Make table file of area under curves for each first key of super dictionary from pickle file or each SFS.
+		- It's decreasing order as it goes down to the bottom.
+		- Able to integrate simulated SFS
+ 	- SFS-rel-cum.py
+ 		- Make visual graph of relative cumulative SFS from pickle file or SFS text file. 
+ 	- SFS-sim.py
+ 		- Make visual graph of relative cumulative SFS from simulated SFS.
+ 	- vcf-SFS-conseq-type.py
+ 		- Make various type of SFS such as bar charts and scatter charts
+ 	- vcf-ann-codon.py
+ 		- Add equence information around the reference bases in the info field of vcf file.
+ 	- vcf-dict-pickle.py
+ 		- Used for creating super-dictionary pickle file based with consequences as the first keys.
+ 	- vcf-downsample-pickle.py
+ 		- From super-dictionary pickle file, create SFS text files by downsampling the data to specific nc value.
+ 	- vcf-snpEff-VEP-types.py
+ 		- Extract all types of consequences annotated by either VEP or snpEff and output as text file.
  
- 
+ 6. Documents
+ 	- Pickle
+ 		- Contain pickle files.
+ 		- Could not upload pickle file from gnomad vcf files due to the huge size of the file.
+ 	- Table
+ 		- Contain .tsv files such as the tables of curves integration.
+ 	- SFS
+ 		- Contain SFS text file.
+ 	- Other
+ 		- Contain additional files such as synonymous_codon_pairs.txt
+ 		
+ 7. Pipeline
+ 	1. Annotate vcf files with VEP(variant effective predictor) like the command below
+ 		- ./vep -i path/to/input_vcf --cache --assembly GRCh37 --vcf --everything -o path/to/output_vcf
+ 	2. 
+ 	
 ## Project with Vitor		
 1. Overview of the Project with Vitor
 	- Infer human (non)synonymous DFE(s) using the PRFratio method. For this, we need to define a set of SNPs potentially neutral. In Drosophila melanogaster, we saw that SNPs from short-introns (< 86 bp) were a good candidate. For Humans, we are going to start testing SNP from non-regulatory, intergenic regions and use the folded SFS derived from these SNPs as the denominator for the ratio between two SFSs, where the numerator would be either a synonymous or a nonsynonymous SFS. The goal is to obtain a better version of DFEs that accounts for demography (a characteristic of the PRFratio method) and that uses a more appropriate set of neutral SNPs. It opens for the possibility of measuring selection on different genomic features like: regulatory regions, transcription factor binding sites, UTRs etc, and for measuring selection on synonymous codon pairs (one of the goals of the multiclass synonymous sites project). 

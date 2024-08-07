@@ -8,8 +8,8 @@ from scipy.optimize import curve_fit
 a, b = prf.simsfs(20, 100, 1000, None, 900, True)
 print(a, b)
 
-np_array_a = np.array(a)
-np_array_b = np.array(b)
+np_array_a = np.array(a)[1:]
+np_array_b = np.array(b)[1:]
 
 sum_a = np.cumsum(np_array_a)
 sum_b = np.cumsum(np_array_b)
