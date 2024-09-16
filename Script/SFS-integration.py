@@ -56,7 +56,7 @@ def data_integration(input_file, output_file):
     input_len = len(lines)
     area_list = []
     no_curve_list = []
-    i = 2
+    i = 0
     while True:
         if i == input_len:
             break 
@@ -67,7 +67,7 @@ def data_integration(input_file, output_file):
                 continue
             i +=1
             data_line = lines[i]
-            i +=1
+            i +=2
             data_list = data_line.strip().split()
             float_list = [float(x) for x in data_list]
             np_array = np.array(float_list)
@@ -113,16 +113,18 @@ def data_integration(input_file, output_file):
         output_file.write(line)
 
 
-def dict_integration(pickle_file, nc, output_file):
+def dict_integration(pickle_file, nc, output_file, exception_list):
     Dic = pickle.load(open(pickle_file, "rb"))
     area_list = []
     no_curve_list = []
     for conseq in Dic:
-        sfs = np.zeros(nc, dtype=np.float32)
+        # if "&" in conseq or conseq in exception_list:
+        #     continue
+        sfs = np.zeros(nc+1, dtype=np.float32)
         for acan in Dic[conseq]:
             # an = acan.split(sep="_")[3]
             ac = int(acan.split(sep="_")[1])
-            sfs[ac-1] += Dic[conseq][acan]
+            sfs[ac] += Dic[conseq][acan]
         np_array = np.array(sfs)
         sum = np.cumsum(np_array)
         try:
@@ -166,11 +168,11 @@ def dict_integration(pickle_file, nc, output_file):
 
 
 
-fn1 = "1kG-SFS-downsample-integrate-syn-all-30.tsv"
+fn1 = "1kG-SFS-vep-syn-mis-all-integrate.tsv"
 f1 = open(fn1, "w")
 f1.write("conseq\tarea-under-curve\n")
 
-fn2 = "1kG-vep-syn-all-codon-downsample-30.txt"
+fn2 = "Document/SFS/1kG-vep-syn-mis-all.txt"
 f2 = open(fn2, "r")
 
 data_integration(f2, f1)
@@ -179,12 +181,15 @@ f1.close()
 f2.close()
 
 
-# fn1 = "1kG-SFS-syn-all-integrate.tsv"
+# fn1 = "1kG-SFS-vep-syn-mis-all-integrate.tsv"
 # f1 = open(fn1, "w")
 # f1.write("conseq\tarea-under-curve\n")
 
-# fn2 = "1kG_vep_syn_single_codon_counts.p"
+# fn2 = "/Users/harutotateishi/Library/CloudStorage/OneDrive-TempleUniversity/Documents/Study/Lab/Lab-Work/Document/pickle/1kG_vep_syn_mis_ANAC_counts_all.p"
 
-# dict_integration(fn2, 5008, f1)
+# exception_list = ["mature_miRNA_variant", "non_coding_transcript_variant", "coding_transcript_variant", "transcript_ablation", "frameshift_variant", "inframe_insertion", 'stop_lost', "start_lost", 'splice_donor_variant', "stop_retained_variant", "inframe_deletion", "transcript_amplification", "splice_acceptor_variant"]
+# exception_list = []
+
+# dict_integration(fn2, 5008, f1, exception_list)
 
 # f1.close()

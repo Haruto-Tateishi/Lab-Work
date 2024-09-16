@@ -50,14 +50,14 @@ def build_sampled_SFS(consequence,cD,nc):
     numvals = 0
     numokvals = 0
     skipped_records = 0
-    # zero_one = [0, 1]
-    # print(consequence)
+    zero_one = [0, 1]
+    print(consequence)
     for acanstr in cD:
         temp = acanstr.split(sep="_")
         (ac, an) = (int(temp[1]), int(temp[3]))
         numvals += 1
         if an >= nc:
-            # print(random.choice(zero_one))
+            print(random.choice(zero_one))
             numokvals += 1
             popp = ac / an
             for k in range(min(nc, ac + 1)):
@@ -77,19 +77,20 @@ def processnc(consequence,cD,nc,sfsoutfilename):
     codonpairlist,aalist = getcodonpairs()
     sumnumvals = 0
     sumnumokvals = 0
-    sampledsfs,numvals,numokvals = build_sampled_SFS(consequence, cD,nc)
+    sampledsfs,numvals,numokvals = build_sampled_SFS(consequence,cD,nc)
     sfsf = open(sfsoutfilename, 'a')
     sfsf.write("{}\n".format(consequence))
-    sfsf.write(' '.join("{:.1f}".format(x) for x in sampledsfs) + "\n")
+    sfsf.write(' '.join("{:.1f}".format(x) for x in sampledsfs) + "\n\n")
     sfsf.close()
     return int(sumnumvals/(2*len(codonpairlist))),int(sumnumokvals/(2*len(codonpairlist)))
 
-nc = 30
-picklefilename = "1kG_vep_syn_all_codon_counts.p"
-sfsoutfilename = "1kG-vep-syn-all-codon-downsample-30.txt"
-sfsoutfile = open(sfsoutfilename,'w')
-sfsoutfile.write("{}{}{}{}".format(nc,"\n",picklefilename,"\n"))
-sfsoutfile.close()
+
+nc = 200
+picklefilename = "Document/Pickle/1kG_vep_syn_mis_ANAC_counts_all.p"
+sfsoutfilename = "1kG-vep-syn-mis-all-downsample-200.txt"
+# sfsoutfile = open(sfsoutfilename,'w')
+# sfsoutfile.write("{}{}{}{}".format(nc,"\n",picklefilename,"\n"))
+# sfsoutfile.close()
 D = pickle.load(open(picklefilename, 'rb'))
 
 for cD in D:
