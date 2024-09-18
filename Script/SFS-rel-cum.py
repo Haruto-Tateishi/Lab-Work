@@ -16,17 +16,44 @@ def curve_color(colors):
     return color
 
 
-def rel_cum(conseq, data_line, curve_color):
-    data = data_line.strip().split()
-    float_list = [float(x) for x in data]
-    np_array = np.array(float_list)
-    # print(np_array.dtype)
-    cumulative_sum = np.cumsum(np_array)
-    # print(cumulative_sum)
-    relative_cumulative = cumulative_sum / cumulative_sum[-1]
-    x_axis = np.arange(1, len(relative_cumulative) + 1)
-    plt.plot(x_axis, relative_cumulative, marker='', linestyle='-', color=curve_color, label=f'{conseq}')
-
+def rel_cum(input_fn, exception_list):
+    fn = open(input_fn, "r")
+    lines = fn.readlines()
+    len_lines = len(lines)
+    i = 0
+    g = 0
+    while True:
+        if i == len_lines:
+            break 
+        else:
+            conseq = lines[i].strip()
+            # print(conseq)
+            if conseq in exception_list:
+                color = curve_color(colors)
+                i += 3
+                g += 1
+                continue
+            if "&" in conseq:
+                i += 3
+                continue
+            i +=1
+            data_line = lines[i]
+            # print(data_line)
+            i +=2
+            color = curve_color(colors)
+            # color = colormap(g)
+            g += 1
+            data = data_line.strip().split()
+            float_list = [float(x) for x in data]
+            np_array = np.array(float_list)
+            # print(np_array.dtype)
+            cumulative_sum = np.cumsum(np_array)
+            # print(cumulative_sum)
+            relative_cumulative = cumulative_sum / cumulative_sum[-1]
+            x_axis = np.arange(1, len(relative_cumulative) + 1)
+            plt.plot(x_axis, relative_cumulative, marker='', linestyle='-', color=color, label=f'{conseq}')
+            pass
+    
 def pkl_rel_cum(pickle_file, nc, colormap, exception_list):
     Dic = pickle.load(open(pickle_file, "rb"))
     i = 0
@@ -53,9 +80,8 @@ def pkl_rel_cum(pickle_file, nc, colormap, exception_list):
             pass
 
 
-# fn1 = "Document/SFS/1kG-vep-conseq-single-donwsample-200.txt"
-# f1 = open(fn1, 'r')
-fn1 = "Document/Pickle/1kG_sift4g_single_conseq.p"
+sfs = "Document/SFS/gnomad-vep-downsample-5008.txt"
+# pkl = "Document/Pickle/1kG_sift4g_single_conseq.p"
 nc = 5008
 
 # exception_list = ["mature_miRNA_variant", "non_coding_transcript_variant", "coding_transcript_variant", "transcript_ablation", "frameshift_variant", "inframe_insertion", 'stop_lost', "start_lost", 'splice_donor_variant', "stop_retained_variant", "inframe_deletion", "transcript_amplification", "splice_acceptor_variant", "stop_gained"]
@@ -70,34 +96,10 @@ plt.ylabel('Relative Cumulative Sum')
 plt.title(f'Relative Cumulative Chart with nc value = {str(nc)}')
 plt.grid(True)
 
-# lines = f1.readlines()
-# input_len = len(lines)
-# i = 0
-# g = 0
-# while True:
-#     if i == input_len:
-#         break 
-#     else:
-#         conseq = lines[i].strip()
-#         # print(conseq)
-#         # if "&" in conseq:
-#         #     i +=2
-#         #     continue
-#         i +=1
-#         data_line = lines[i]
-#         # print(data_line)
-#         i +=2
-#         color = curve_color(colors)
-#         # color = colormap(g)
-#         g += 1
-#         if conseq in exception_list:
-#             continue
-#         rel_cum(conseq, data_line, color)
-#         pass
+rel_cum(sfs, exception_list)
 
+# pkl_rel_cum(pkl, nc, colors, exception_list)
 
-pkl_rel_cum(fn1, nc, colors, exception_list)
-
-plt.ylim(0.85, 1.0001)
+plt.ylim(0.990, 1.0001)
 plt.legend(loc='lower right', fontsize='small', ncol=3, frameon=True)
 plt.show()
