@@ -50,14 +50,14 @@ def build_sampled_SFS(consequence,cD,nc):
     numvals = 0
     numokvals = 0
     skipped_records = 0
-    zero_one = [0, 1]
+    # zero_one = [0, 1]
     print(consequence)
     for acanstr in cD:
         temp = acanstr.split(sep="_")
         (ac, an) = (int(temp[1]), int(temp[3]))
         numvals += 1
         if an >= nc:
-            print(random.choice(zero_one))
+            # print(random.choice(zero_one))
             numokvals += 1
             popp = ac / an
             for k in range(min(nc, ac + 1)):
