@@ -32,12 +32,15 @@ def codon_pair_pickle(output_fn):
                 continue
             # if len(vep) > 1: # skip all records that indicate more than one function
             #     continue
+            if len(record.info["AC"]) == 1:
+                ac = record.info["AC"][0]
+            else: 
+                continue
             for annotation in vep:
                 conseq = annotation.split(sep="|")[1]
                 if conseq != "synonymous_variant":
                     continue
                 else:
-                    ac = record.info["AC"][0]
                     an = record.info["AN"]
                     ref_seq = record.info["RefSeq"].upper()
                     # print(ref_seq)
@@ -70,38 +73,52 @@ def codon_pair_pickle(output_fn):
 def conseq_pickle(output_fn):
     zero_one = [0, 1]
     super_dict = {}
+    skipped = 0
     for i in range(1, 23):
         print("start ",i,end="")
-        fn1 = op.join("/home/haruto/Lab-Work/vcf/","1kG-chr{}-vep-every.vcf.gz".format(i))
+        fn1 = op.join("vcf/","1kG-chr{}-vep-every.vcf.gz".format(i))
         gunzipped = gzip.open(fn1, 'r')
         f1 = pysam.VariantFile(gunzipped)
-        for record in f1:
+        while True:
+            try:
+                record = next(f1)
+            except OSError:
+                continue
+            except StopIteration:
+                break
             try:
                 vep = record.info["CSQ"]
                 # vep = record.info["vep"]
             except KeyError:
                 continue
-            if len(vep) > 1: # skip all records that indicate more than one function
+            # if len(vep) > 1: # skip all records that indicate more than one function
+            #     skipped +=1
+            #     continue
+            if len(record.ref) != 1 or any(len(alt) != 1 for alt in record.alts):
                 continue
-            annotation = vep[0]
-            conseq = annotation.split(sep="|")[1]
-            ac = record.info["AC"][0]
-            an = record.info["AN"]
-            # print(mut_seq)
-            data = "AC_" + str(ac) + "_AN_" + str(an)
-            if conseq in super_dict:
-                if data in super_dict[conseq]:
-                    super_dict[conseq][data] += 1
-                    pass
+            conseq_list = []
+            for annotation in vep:
+                conseq = annotation.split(sep="|")[1]
+                if conseq in conseq_list:
+                    continue
                 else:
-                    super_dict[conseq][data] = 1
-                    print(random.choice(zero_one))
-                    pass
-            if conseq not in super_dict:
-                super_dict[conseq] = {}
-                super_dict[conseq][data] = 1
-                pass
-        print(" done")
+                    conseq_list.append(conseq)
+                    ac = record.info["AC"][0]
+                    an = record.info["AN"]
+                    data = "AC_" + str(ac) + "_AN_" + str(an)
+                    if conseq in super_dict:
+                        if data in super_dict[conseq]:
+                            super_dict[conseq][data] += 1
+                            pass
+                        else:
+                            super_dict[conseq][data] = 1
+                            # print(random.choice(zero_one))
+                            pass
+                    elif conseq not in super_dict:
+                        super_dict[conseq] = {}
+                        super_dict[conseq][data] = 1
+                        pass
+        print(f" done, {skipped}")
     pickle.dump(super_dict, open(output_fn, 'wb'))
 
 def conseq_pickle_specific_conseq(output_fn, spe_conseq_list):
@@ -119,8 +136,26 @@ def conseq_pickle_specific_conseq(output_fn, spe_conseq_list):
                 vep = record.info["CSQ"]
                 # vep = record.info["vep"]
             except KeyError:
+                continueac = record.info["AC"][0]
+                an = record.info["AN"]
+                data = "AC_" + str(ac) + "_AN_" + str(an)
+                if conseq in super_dict:
+                    if data in super_dict[conseq]:
+                        super_dict[conseq][data] += 1
+                        pass
+                    else:
+                        super_dict[conseq][data] = 1
+                        # print(random.choice(zero_one))
+                        pass
+                if conseq not in super_dict:
+                    super_dict[conseq] = {}
+                    super_dict[conseq][data] = 1
+                   
+            conseq_list = []        # While loop
+            if len(record.info["AC"]) == 1:
+                ac = record.info["AC"][0]
+            else: 
                 continue
-            conseq_list = []
             for annotation in vep:
                     conseq = annotation.split(sep="|")[1]
                     conseq_list.append(conseq)
@@ -128,7 +163,6 @@ def conseq_pickle_specific_conseq(output_fn, spe_conseq_list):
                 if spe_conseq not in conseq_list:
                     continue
                 else:
-                    ac = record.info["AC"][0]
                     an = record.info["AN"]
                     # print(mut_seq)
                     data = "AC_" + str(ac) + "_AN_" + str(an)
@@ -159,7 +193,10 @@ def conseq_pickle_folded(output_fn):
                 continue
             annotation = vep[0]
             conseq = annotation.split(sep="|")[1]
-            ac = record.info["AC"][0]
+            if len(record.info["AC"]) == 1:
+                ac = record.info["AC"][0]
+            else: 
+                continue
             an = record.info["AN"]/2
             if ac > an:
                 ac = record.info["AN"] - record.info["AC"][0]
@@ -180,19 +217,55 @@ def conseq_pickle_folded(output_fn):
         print(" done")
     pickle.dump(super_dict, open(output_fn, 'wb'))
 
-def conseq_seq_pickle(output_fn):
+def conseq_flanking_pickle(output_fn):
     zero_one = [0, 1]
     super_dict = {}
-    for i in range(1, 23):
-        print("start ",i,end="")
-        fn1 = op.join("/home/haruto/Lab-Work/vcf/","1kG-chr{}-vep-every.vcf.gz".format(i))
+    for chr in range(1, 23):
+        print(f"start{chr} \n")
+        position_skipped =0
+        format_skipped=0
+        key_error_skipped=0
+        sequence_skipped = 0
+        fn1 = op.join("vcf/1kG_chr{}_vep_pickorder_pantro6filtered_regfiltered_modified_codon.vcf.gz".format(chr))
         gunzipped = gzip.open(fn1, 'r')
         f1 = pysam.VariantFile(gunzipped)
-        for record in f1:
+        super_dict[chr] = {}
+        flanking_list = ["AA", "AC", "AG", "AT", "CA", "CC", "CG", "CT", "GA", "GC", "GG", "GT", "TA", "TC", "TG", "TT"]
+        variant_list = ["A/C", "A/G", "A/T", "C/A", "C/G", "C/T", "G/A", "G/C", "G/T", "T/A", "T/C", "T/G"]
+        for variant in variant_list:
+            for bases in flanking_list:
+                flanking = f"{bases[0]}{variant}{bases[1]}"
+                super_dict[chr][flanking] = {}
+        skip_list = []
+        pre_pos = 0
+        while True:
             try:
-                seq = record.info["RefSeq"]
-                # vep = record.info["vep"]
-            except KeyError:
+                record = next(f1)
+            except OSError:
+                continue
+            except StopIteration:
+                break
+            cur_pos = record.pos
+            if cur_pos - pre_pos == 1:
+                skip_list.append(pre_pos)
+                skip_list.append(cur_pos)
+                # print("prereading")
+            pre_pos = cur_pos
+            pass
+        print("prework done")
+        f1.close()
+        gunzipped = None
+        gunzipped = gzip.open(fn1, 'r')
+        f1 = pysam.VariantFile(gunzipped)
+        while True:
+            try:
+                record = next(f1)
+            except OSError:
+                continue
+            except StopIteration:
+                break
+            if record.pos in skip_list:
+                position_skipped+=1
                 continue
             try:
                 vep = record.info["CSQ"]
@@ -200,40 +273,38 @@ def conseq_seq_pickle(output_fn):
             except KeyError:
                 continue
             if len(vep) > 1: # skip all records that indicate more than one function
+                format_skipped +=1
                 continue
-            if len(seq) > 1: # skip all records that indicate more than one alt allele
+            if len(record.ref) != 1 or any(len(alt) != 1 for alt in record.alts):
+                format_skipped +=1
                 continue
-            alt = record.ref
-            codon_seq = list(seq)
-            codon_seq.insert(2, f"/{alt}")
-            codon_seq = "".join(codon_seq)
             annotation = vep[0]
-            conseq = annotation.split(sep="|")[1]
-            ac = record.info["AC"][0]
-            an = record.info["AN"]
-            data = "AC_" + str(ac) + "_AN_" + str(an)
-            # print(mut_seq)
-            if conseq in super_dict:
-                if codon_seq in super_dict[conseq]:
-                    if data in super_dict[conseq][codon_seq]:
-                        super_dict[conseq][codon_seq][data] += 1
-                        pass
-                    else:
-                        super_dict[conseq][codon_seq][data] = 1
-                        print(random.choice(zero_one))
-                else:
-                    super_dict[conseq][codon_seq] = {}
-                    super_dict[conseq][codon_seq][data] = 1
-                    pass
-            else:
-                super_dict[conseq] = {}
-                super_dict[conseq][codon_seq] = {}
-                super_dict[conseq][codon_seq][data] = 1
-                pass
-        print(" done")
+            try:
+                conseq = annotation.split(sep="|")[1]
+                ac = record.info["AC"][0]
+                pos = record.pos
+                refseq = record.info["RefSeq"].upper()
+                # print(refseq)
+                if "N" in refseq:
+                    sequence_skipped+=1
+                    break
+                ref = record.ref
+                alt = record.alts[0]
+            except KeyError:
+                    key_error_skipped+=1
+                    continue
+            flanking = f"{refseq[0]}{ref}/{alt}{refseq[2]}"
+            # print(f"ref:{ref} alt: {alt}")
+            if conseq in super_dict[chr][flanking]:
+                super_dict[chr][flanking][conseq][pos] = ac
+                continue
+            elif conseq not in super_dict[chr][flanking]:
+                super_dict[chr][flanking][conseq] = {}
+                super_dict[chr][flanking][conseq][pos] = ac
+                continue
+        print(f" done, skipped, position:{position_skipped}, format:{format_skipped}, sequence:{sequence_skipped}, key_error:{key_error_skipped}")
     pickle.dump(super_dict, open(output_fn, 'wb'))
 
 
-output = "1kG_vep_syn_mis_ANAC_counts_all.p"
-spe_conseq_list = ["synonymous_variant", "missense_variant"]
-conseq_pickle_specific_conseq(output, spe_conseq_list)
+output = "1kG_vep_pickorder_pantro6filtered_flanking_location.p"
+conseq_flanking_pickle(output)
