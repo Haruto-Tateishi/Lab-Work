@@ -50,7 +50,7 @@ def build_sampled_SFS(consequence,cD,nc):
     numvals = 0
     numokvals = 0
     skipped_records = 0
-    # zero_one = [0, 1]
+    zero_one = [0, 1]
     print(consequence)
     for acanstr in cD:
         temp = acanstr.split(sep="_")
@@ -72,8 +72,7 @@ def build_sampled_SFS(consequence,cD,nc):
     print(f"Conseq: {consequence}, Total records: {numvals}, Skipped records: {skipped_records}, Processed records: {numokvals}")
     return sampledsfs, numvals, numokvals
 
-
-def processnc(consequence,cD,nc,sfsoutfilename):
+def processnc_dict_pickle(consequence,cD,nc,sfsoutfilename):
     codonpairlist,aalist = getcodonpairs()
     sumnumvals = 0
     sumnumokvals = 0
@@ -84,14 +83,49 @@ def processnc(consequence,cD,nc,sfsoutfilename):
     sfsf.close()
     return int(sumnumvals/(2*len(codonpairlist))),int(sumnumokvals/(2*len(codonpairlist)))
 
+def processnc_superdict_pickle_all(consequence,cD,nc,sfsoutfilename):
+    codonpairlist,aalist = getcodonpairs()
+    sumnumvals = 0
+    sumnumokvals = 0
+    sampledsfs,numvals,numokvals = build_sampled_SFS(consequence,cD,nc)
+    sfsf = open(sfsoutfilename, 'a')
+    sfsf.write("{}\n".format(consequence))
+    sfsf.write(' '.join("{:.1f}".format(x) for x in sampledsfs) + "\n\n")
+    sfsf.close()
+    return int(sumnumvals/(2*len(codonpairlist))),int(sumnumokvals/(2*len(codonpairlist)))
 
-nc = 200
-picklefilename = "Document/Pickle/1kG_vep_syn_mis_ANAC_counts_all.p"
-sfsoutfilename = "1kG-vep-syn-mis-all-downsample-200.txt"
-# sfsoutfile = open(sfsoutfilename,'w')
-# sfsoutfile.write("{}{}{}{}".format(nc,"\n",picklefilename,"\n"))
-# sfsoutfile.close()
-D = pickle.load(open(picklefilename, 'rb'))
+def downsample_dict_pickle():
+    nc = 5008
+    picklefilename = "Document/Pickle/FlankingBases/syn_codon/1kG_vep_pickorder_flanking_syn_codon.p"
+    sfsoutfilename = "uk10k_vep_pickorder_flanking_CpGfiltered_intergenic_synonymous_down_5008.txt"
+    # sfsoutfile = open(sfsoutfilename,'w')
+    # sfsoutfile.write("{}{}{}{}".format(nc,"\n",picklefilename,"\n"))
+    # sfsoutfile.close()
+    Dictionary = pickle.load(open(picklefilename, 'rb'))
 
-for cD in D:
-    processnc(cD,D[cD],nc,sfsoutfilename)
+    for first_key in Dictionary:
+        processnc_dict_pickle(first_key,Dictionary[first_key],nc,sfsoutfilename)
+
+def downsample_superdict_pickle():
+    nc = 15
+    picklefilename = "Document/Pickle/FlankingBases/syn_codon/uk10k_vep_pickorder_flanking_syn_codon_paired.p"
+    sfsoutfilename = f"uk10k_vep_pickorder_flanking_syn_codon_all_down_{nc}.txt"
+    sfsoutfile = open(sfsoutfilename,'w')
+    # sfsoutfile.write("{}{}{}{}".format(nc,"\n",picklefilename,"\n"))
+    sfsoutfile.close()
+    Dictionary = pickle.load(open(picklefilename, 'rb'))
+    ind = 0
+    for first_key in Dictionary:
+        syn_codon = list(first_key)
+        syn_codon[3] = "-"
+        syn_codon = "".join(syn_codon)
+        # ind +=1
+        # if ind == 5:
+        #     break
+        for second_key in Dictionary[first_key]:
+            sfsoutfile = open(sfsoutfilename, 'a')
+            sfsoutfile.write(f"{first_key}\n")
+            sfsoutfile.close()
+            processnc_superdict_pickle_all(second_key,Dictionary[first_key][second_key],nc,sfsoutfilename)
+
+downsample_superdict_pickle()
