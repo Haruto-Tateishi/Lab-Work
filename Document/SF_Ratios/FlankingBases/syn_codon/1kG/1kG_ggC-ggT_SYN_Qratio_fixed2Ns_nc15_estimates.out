@@ -1,0 +1,67 @@
+SF_Ratios.py   @Jody Hey 2024
+=============================
+Command line: -d fixed2Ns -f unfolded -i 3 -u -r /home/haruto/Lab-Work/Document/SF_Ratios/FlankingBases/syn_codon/1kG -a /home/haruto/Lab-Work/Document/SFS/FlankingBases/syn_codon/single/1kG/1kG_vep_pickorder_flanking_syn_codon_ggC-ggT_down_15 -p 1kG_ggC-ggT
+Arguments:
+	sfsfilename: /home/haruto/Lab-Work/Document/SFS/FlankingBases/syn_codon/single/1kG/1kG_vep_pickorder_flanking_syn_codon_ggC-ggT_down_15
+	fix_theta_ratio: None
+	densityof2Ns: fixed2Ns
+	foldstatus: unfolded
+	basinhoppingopt: False
+	optimizetries: 3
+	setmax2Ns: 0
+	maxi: None
+	poplabel: 1kG_ggC-ggT
+	estimatemax2Ns: False
+	outdir: /home/haruto/Lab-Work/Document/SF_Ratios/FlankingBases/syn_codon/1kG
+	dualannealopt: True
+	estimate_pointmass: False
+	filecheck: False
+	estimate_pointmass0: False
+	commandstring: -d fixed2Ns -f unfolded -i 3 -u -r /home/haruto/Lab-Work/Document/SF_Ratios/FlankingBases/syn_codon/1kG -a /home/haruto/Lab-Work/Document/SFS/FlankingBases/syn_codon/single/1kG/1kG_vep_pickorder_flanking_syn_codon_ggC-ggT_down_15 -p 1kG_ggC-ggT
+	fixmode0: False
+	thetaNspacerange: 100
+	profile: False
+	estimate_both_thetas: False
+	includemisspec: False
+	dofolded: False
+	nc: 15
+	datafileheader: intergenic_variant
+	numparams: 2
+	local_optimize_method: Nelder-Mead
+
+trial	likelihood	thetaratio	2Ns	optimizer_message
+0	118.67871	7.36328e-01 -7.38353e-01	Optimization terminated successfully.
+1	118.67871	7.36347e-01 -7.38427e-01	Optimization terminated successfully.
+2	118.67871	7.36383e-01 -7.38382e-01	Optimization terminated successfully.
+DA1	118.67871	7.36414e-01 -7.38496e-01	['Maximum number of iteration reached']
+DA2	118.67500	7.34025e-01 -7.26806e-01	['Maximum number of iteration reached']
+
+Optimization: Optimize
+Maximized Likelihood, AIC, Parameter Estimates, 95% Confidence Intervals:
+AIC	-233.357
+likelihood	118.679
+thetaratio	0.7363	(0.6904 - 0.7858)
+2Ns	-0.73843	(-0.90897 - -0.56788)
+
+Compare data and optimization estimates
+	Euclidean Distance: 0.2803 RMSE: 0.07491
+	*Expected counts generated with Wright-Fisher theta estimates (SF_Ratios does not provide theta estimates)
+--------------------------------------------------------------------------------------------------------------
+i	DataN	DataS	DataRatio	Fit*_N	Fit*_S	Fit_Ratio
+0	0.0	0.0	inf	0.0	0.0	inf
+1	205.9	141.3	0.6863	143.7	100.1	0.6968
+2	72.6	45.8	0.6309	71.8	47.4	0.6597
+3	45.1	28.7	0.6364	47.9	29.9	0.6248
+4	32.8	20.1	0.6128	35.9	21.3	0.592
+5	25.3	14.6	0.5771	28.7	16.1	0.5611
+6	19.9	11.1	0.5578	23.9	12.7	0.5321
+7	15.8	8.7	0.5506	20.5	10.4	0.5049
+8	12.4	6.8	0.5484	18.0	8.6	0.4792
+9	9.8	5.2	0.5306	16.0	7.3	0.4551
+10	7.9	3.8	0.481	14.4	6.2	0.4324
+11	6.5	2.7	0.4154	13.1	5.4	0.4111
+12	5.4	1.8	0.3333	12.0	4.7	0.391
+13	4.4	1.1	0.25	11.1	4.1	0.3721
+14	3.4	0.5	0.1471	10.3	3.6	0.3543
+
+Time taken: 0 hours, 23 minutes, 33.72 seconds
