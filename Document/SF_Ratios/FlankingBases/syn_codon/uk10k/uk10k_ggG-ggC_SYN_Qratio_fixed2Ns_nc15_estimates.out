@@ -1,0 +1,67 @@
+SF_Ratios.py   @Jody Hey 2024
+=============================
+Command line: -d fixed2Ns -f unfolded -i 3 -u -r /home/haruto/Lab-Work/Document/SF_Ratios/FlankingBases/syn_codon/uk10k -a /home/haruto/Lab-Work/Document/SFS/FlankingBases/syn_codon/single/uk10k/uk10k_vep_pickorder_flanking_syn_codon_ggG-ggC_down_15 -p uk10k_ggG-ggC
+Arguments:
+	sfsfilename: /home/haruto/Lab-Work/Document/SFS/FlankingBases/syn_codon/single/uk10k/uk10k_vep_pickorder_flanking_syn_codon_ggG-ggC_down_15
+	fix_theta_ratio: None
+	densityof2Ns: fixed2Ns
+	foldstatus: unfolded
+	basinhoppingopt: False
+	optimizetries: 3
+	setmax2Ns: 0
+	maxi: None
+	poplabel: uk10k_ggG-ggC
+	estimatemax2Ns: False
+	outdir: /home/haruto/Lab-Work/Document/SF_Ratios/FlankingBases/syn_codon/uk10k
+	dualannealopt: True
+	estimate_pointmass: False
+	filecheck: False
+	estimate_pointmass0: False
+	commandstring: -d fixed2Ns -f unfolded -i 3 -u -r /home/haruto/Lab-Work/Document/SF_Ratios/FlankingBases/syn_codon/uk10k -a /home/haruto/Lab-Work/Document/SFS/FlankingBases/syn_codon/single/uk10k/uk10k_vep_pickorder_flanking_syn_codon_ggG-ggC_down_15 -p uk10k_ggG-ggC
+	fixmode0: False
+	thetaNspacerange: 100
+	profile: False
+	estimate_both_thetas: False
+	includemisspec: False
+	dofolded: False
+	nc: 15
+	datafileheader: intergenic_variant
+	numparams: 2
+	local_optimize_method: Nelder-Mead
+
+trial	likelihood	thetaratio	2Ns	optimizer_message
+0	49.97389	8.23810e-01 1.74866e-01	Optimization terminated successfully.
+1	49.97389	8.23795e-01 1.74932e-01	Optimization terminated successfully.
+2	49.97389	8.23796e-01 1.74910e-01	Optimization terminated successfully.
+DA1	49.97389	8.23802e-01 1.74896e-01	['Maximum number of iteration reached']
+DA2	49.97389	8.23802e-01 1.74896e-01	['Maximum number of iteration reached']
+
+Optimization: Dualannealing2
+Maximized Likelihood, AIC, Parameter Estimates, 95% Confidence Intervals:
+AIC	-95.948
+likelihood	49.974
+thetaratio	0.8238	(0.6315 - 1.0647)
+2Ns	0.1749	(-0.52188 - 1.0693)
+
+Compare data and optimization estimates
+	Euclidean Distance: inf RMSE: inf
+	*Expected counts generated with Wright-Fisher theta estimates (SF_Ratios does not provide theta estimates)
+--------------------------------------------------------------------------------------------------------------
+i	DataN	DataS	DataRatio	Fit*_N	Fit*_S	Fit_Ratio
+0	0.0	0.0	inf	0.0	0.0	inf
+1	8.4	5.7	0.6786	7.4	6.1	0.8324
+2	3.8	2.9	0.7632	3.7	3.1	0.8411
+3	2.4	2.5	1.042	2.5	2.1	0.8499
+4	1.8	2.3	1.278	1.8	1.6	0.8589
+5	1.5	1.9	1.267	1.5	1.3	0.868
+6	1.4	1.5	1.071	1.2	1.1	0.8772
+7	1.3	1.2	0.9231	1.1	0.9	0.8865
+8	1.1	1.0	0.9091	0.9	0.8	0.8959
+9	0.9	0.8	0.8889	0.8	0.7	0.9055
+10	0.7	0.5	0.7143	0.7	0.7	0.9152
+11	0.4	0.2	0.5	0.7	0.6	0.925
+12	0.2	0.1	0.5	0.6	0.6	0.935
+13	0.1	0.1	1	0.6	0.5	0.9451
+14	0.0	0.3	inf	0.5	0.5	0.9554
+
+Time taken: 0 hours, 8 minutes, 56.06 seconds
